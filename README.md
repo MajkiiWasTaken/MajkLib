@@ -1,4 +1,4 @@
-# MajkLib
+# MajkLib 
 
 MajkLib is a lightweight utility and framework library written in C.
 
