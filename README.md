@@ -73,7 +73,6 @@ int main(void)
 ```txt
 MajkLib.h
 MajkLib.c
-main.c
 ```
 
 ---
