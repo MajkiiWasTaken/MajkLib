@@ -6,8 +6,6 @@
 ![Dependencies](https://img.shields.io/badge/dependencies-Minimal-success)
 ![Status](https://img.shields.io/badge/status-In%20Development-yellow)
 
----
-
 ### Overview
 
 **MajkLib** is a lightweight utility and framework library written entirely in **C**, designed to simplify low-level application development while exposing the underlying concepts of system programming.
@@ -149,16 +147,6 @@ Future development may include:
 * audio support,
 * networking utilities,
 * cross-platform compatibility.
-
----
-
-### Project Structure
-
-```text
-MajkLib/
-├── MajkLib.h
-└── MajkLib.c
-```
 
 ---
 
