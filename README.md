@@ -78,6 +78,14 @@ main.c
 
 ---
 
+# Memory Ownership Notes
+
+- `SplitString()` allocates each token into `output[i]`.
+- Caller owns those allocations and must free them after use.
+- Use `FreeSplitString(output, count)` to release all token buffers returned by `SplitString()`.
+
+---
+
 # Building
 
 Example using GCC on Windows:

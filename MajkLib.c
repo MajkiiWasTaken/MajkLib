@@ -2,11 +2,15 @@
 
 static HWND hWnd;
 static UInt8 running = 1;
+static Int32 mouseWheelDelta = 0;
 
 // Window methods
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
     switch (msg) {
+        case WM_MOUSEWHEEL:
+            mouseWheelDelta += GET_WHEEL_DELTA_WPARAM(wParam) / WHEEL_DELTA;
+            return 0;
         case WM_DESTROY:
             running = 0;
             PostQuitMessage(0);
@@ -20,7 +24,7 @@ void OpenWindow(UInt16 width, UInt16 height, const char* title){
     WNDCLASS wc = {0};
     
     wc.lpfnWndProc = WindowProc;
-    wc.lpszClassName = "MajkLibWindowClass";
+    wc.lpszClassName = "LibWindowClass";
 
     RegisterClass(&wc);
 
@@ -226,9 +230,9 @@ Bool IsMouseButtonReleased(Int32 button){
 }
 
 Int32 GetMouseWheelMove(){
-    // This function would require handling the WM_MOUSEWHEEL message in the WindowProc
-    // and storing the wheel movement in a static variable. For simplicity, it's not implemented here.
-    return 0;
+    Int32 delta = mouseWheelDelta;
+    mouseWheelDelta = 0;
+    return delta;
 }
 
 Vec2 GetMousePosition(){
@@ -248,7 +252,7 @@ void MajkShowCursor(){
     ShowCursor(TRUE);
 }
 
-void HideCursor(){
+void MajkHideCursor(){
     ShowCursor(FALSE);
 }
 
@@ -365,6 +369,12 @@ Char* ReadTextToBuffer(const Char* path, UInt64* outSize) {
 Float32 GetDeltaTime(){
     static UInt64 lastTime = 0;
     UInt64 currentTime = GetTickCount64();
+
+    if (lastTime == 0){
+        lastTime = currentTime;
+        return 0.0f;
+    }
+
     Float32 deltaTime = (currentTime - lastTime) / 1000.0f;
 
     lastTime = currentTime;
@@ -379,6 +389,12 @@ Float64 GetTime(){
 void SetTargetFPS(UInt32 fps){
     static UInt64 frameStartTime = 0;
     UInt64 currentTime = GetTickCount64();
+
+    if (fps == 0){
+        frameStartTime = currentTime;
+        return;
+    }
+
     UInt64 targetFrameTime = 1000 / fps;
 
     if (frameStartTime == 0){
@@ -401,6 +417,12 @@ UInt32 GetFPS(){
     static UInt32 fps = 0;
 
     UInt64 currentTime = GetTickCount64();
+
+    if (lastTime == 0){
+        lastTime = currentTime;
+        return 0;
+    }
+
     frameCount++;
 
     if (currentTime - lastTime >= 1000){
@@ -722,6 +744,10 @@ void SplitString(const char *str, Char delimiter, Char** output, UInt64 *count) 
             token = (Char*)malloc(length + 1);
 
             if (token == NULL){
+                FreeSplitString(output, parts);
+                if (count != NULL) {
+                    *count = 0;
+                }
                 return;
             }
 
@@ -733,6 +759,21 @@ void SplitString(const char *str, Char delimiter, Char** output, UInt64 *count) 
         }
         if (str[i] == '\0') {
             break;
+        }
+    }
+}
+
+void FreeSplitString(Char** output, UInt64 count){
+    UInt64 i;
+
+    if (output == NULL){
+        return;
+    }
+
+    for (i = 0; i < count; i++){
+        if (output[i] != NULL){
+            free(output[i]);
+            output[i] = NULL;
         }
     }
 }

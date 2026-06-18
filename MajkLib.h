@@ -11,6 +11,11 @@
 #include <stdarg.h>
 #include <string.h>
 #include <math.h>
+#include <time.h>
+#include <stdbool.h>
+#include <assert.h>
+#include <limits.h>
+#include <float.h>
 
 // Definitions of math constants
 #ifndef PI
@@ -31,8 +36,6 @@
 
 
 // Redefinition of primitive data types
-#include <stdbool.h>
-
 typedef bool                            Bool;
 typedef Bool*                           pBool;
 typedef const Bool*                     cpBool;
@@ -182,7 +185,7 @@ Int32 GetMouseWheelMove();
 Vec2 GetMousePosition();
 void SetMousePosition(Int32 x, Int32 y);
 void MajkShowCursor();
-void HideCursor();
+void MajkHideCursor();
 
 // =============================
 // FPS / time
@@ -235,6 +238,7 @@ Char* StringSubstring(const Char* str, UInt64 start, UInt64 length);
 void StringToUpper(Char* str);
 void StringToLower(Char* str);
 void SplitString(const char* str, Char delimiter, Char** output, UInt64* count);
+void FreeSplitString(Char** output, UInt64 count);
 Char* StringDuplicate(const Char* str);
 UInt64 StringLength(const Char* str);
 
