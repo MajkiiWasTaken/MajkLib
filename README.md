@@ -121,7 +121,6 @@ Window Input Timing Utilities
 
 ---
 
-<<<<<<< HEAD
 # Memory Ownership Notes
 
 - `SplitString()` allocates each token into `output[i]`.
@@ -133,7 +132,6 @@ Window Input Timing Utilities
 # Building
 =======
 ### Project Goals
->>>>>>> a77f750a457f908198eced366be542216fa6265a
 
 MajkLib was created to:
 
