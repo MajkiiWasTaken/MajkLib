@@ -130,7 +130,7 @@ Window Input Timing Utilities
 ---
 
 # Building
-=======
+
 ### Project Goals
 
 MajkLib was created to:
